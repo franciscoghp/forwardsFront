@@ -1,0 +1,128 @@
+<header class="mb-5">
+    <h1 *ngIf="!edit && !watching" class="text-4xl font-bold text-white text-center">
+        Add a New Ship
+    </h1>
+    <div class="row" style="margin-bottom: 60px;">
+        <app-logout></app-logout>
+    </div>
+</header>
+
+<main class="bg-white mx-auto p-8 md:p-12 my-10 rounded-lg shadow-2xl">
+    <section>
+        <h3 *ngIf="!edit && !watching" class="font-bold text-2xl">Register the Ship</h3>
+        <h3 *ngIf="edit && !watching" class="font-bold text-2xl">Edit the Ship</h3>
+        <h3 *ngIf="!edit && watching" class="font-bold text-2xl">Deatils of the Ship Selected</h3>
+        <div *ngIf="successMessage" role="alert">
+            <div class="bg-green-500 text-white font-bold rounded-t px-4 py-2">
+                Success!
+            </div>
+            <div class="border border-t-0 border-green-400 rounded-b bg-green-100 px-4 py-3 text-green-700">
+                <p>{{message}}</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="mt-10">
+        <form [formGroup]="form" (ngSubmit)="register()">
+            <div class="flex flex-wrap -mx-3 mb-6">
+                <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+                        Bill of Lading
+                    </label>
+                    <input
+                        class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                        type="number" formControlName="bill_landing">
+                    <span *ngIf="form.controls.bill_landing.touched && form.controls.bill_landing.errors?.required"
+                        class="flex items-center font-medium tracking-wide text-red-500 mt-1 ml-1">
+                        This field is required
+                    </span>
+                </div>
+                <div class="w-full md:w-1/2 px-3">
+                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+                        Quantity of Containers
+                    </label>
+                    <input formControlName="containers"
+                        class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                        id="grid-last-name" type="text">
+                    <span *ngIf="form.controls.containers.touched && form.controls.containers.errors?.required"
+                        class="flex items-center font-medium tracking-wide text-red-500 mt-1 ml-1">
+                        This field is required
+                    </span>
+                </div>
+            </div>
+            <div class="flex flex-wrap -mx-3 mb-6">
+                <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                        for="grid-first-name">
+                        Arrival Date
+                    </label>
+                    <input
+                        class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                        type="date" formControlName="arrival_date">
+                    <span *ngIf="form.controls.arrival_date.touched && form.controls.arrival_date.errors?.required"
+                        class="flex items-center font-medium tracking-wide text-red-500 mt-1 ml-1">
+                        This field is required
+                    </span>
+                </div>
+                <div class="w-full md:w-1/2 px-3">
+                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                        for="grid-last-name">
+                        Departure Date
+                    </label>
+                    <input
+                        class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                        formControlName="departure_date" type="date">
+                    <span *ngIf="form.controls.departure_date.touched && form.controls.departure_date.errors?.required"
+                        class="flex items-center font-medium tracking-wide text-red-500 mt-1 ml-1">
+                        This field is required
+                    </span>
+                </div>
+
+            </div>
+            <div class="flex flex-wrap -mx-3 mb-6">
+                <div class="w-full md:w-1/2 px-3">
+                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                        for="grid-last-name">
+                        Prize per Container (USD)
+                    </label>
+                    <input
+                        class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                        formControlName="prize" type="text">
+                    <span *ngIf="form.controls.prize.touched && form.controls.prize.errors?.required"
+                        class="flex items-center font-medium tracking-wide text-red-500 mt-1 ml-1">
+                        This field is required
+                    </span>
+                </div>
+                <div class="w-full md:w-1/2 px-3">
+                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                        for="grid-last-name">
+                        Shipping company
+                    </label>
+                    <select
+                        class="block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                        formControlName="ship">
+                        <option selected value=null>Select</option>
+                        <option *ngFor="let ship of ships" value="{{ship}}">{{ship}}</option>
+                    </select>
+                    <span *ngIf="form.controls.ship.touched && form.controls.ship.errors?.required"
+                        class="flex items-center font-medium tracking-wide text-red-500 mt-1 ml-1">
+                        This field is required
+                    </span>
+                </div>
+            </div>
+            <button *ngIf="!edit && !watching"
+                class="w-full h-12 bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 rounded shadow-lg hover:shadow-xl transition duration-200">
+                Register
+            </button>
+            <button *ngIf="edit" (click)="editShip()"
+                class="w-full h-12 bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 rounded shadow-lg hover:shadow-xl transition duration-200">
+                Edit
+            </button>
+            <br><br>
+            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                routerLink="/dashboard/home">
+                Return
+            </button>
+        </form>
+    </section>
+</main>

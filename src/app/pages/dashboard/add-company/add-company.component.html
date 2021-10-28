@@ -1,0 +1,115 @@
+<header class="mb-5">
+    <h1 *ngIf="!edit && !watching" class="text-4xl font-bold text-white text-center">
+        Add a New Company
+    </h1>
+    <h1 *ngIf="edit && !watching" class="text-4xl font-bold text-white text-center">
+        Edit Company
+    </h1>
+    <h1 *ngIf="!edit && watching" class="text-4xl font-bold text-white text-center">
+        Company Details
+    </h1>
+    <div class="row" style="margin-bottom: 60px;">
+        <app-logout></app-logout>
+    </div>
+</header>
+
+<main class="bg-white mx-auto p-8 md:p-12 my-10 rounded-lg shadow-2xl">
+    <section>
+        <h3 *ngIf="!edit && !watching" class="font-bold text-2xl">Register the company</h3>
+        <h3 *ngIf="edit && !watching" class="font-bold text-2xl">Edit the company</h3>
+        <h3 *ngIf="!edit && watching" class="font-bold text-2xl">Deatils of the Company Selected</h3>
+        <div *ngIf="successMessage" role="alert">
+            <div class="bg-green-500 text-white font-bold rounded-t px-4 py-2">
+                Success!
+            </div>
+            <div class="border border-t-0 border-green-400 rounded-b bg-green-100 px-4 py-3 text-green-700">
+                <p>{{message}}</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="mt-10">
+        <form [formGroup]="form" (ngSubmit)="register()">
+            <div class="flex flex-wrap -mx-3 mb-6">
+                <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+                        Fiscal Number
+                    </label>
+                    <input
+                        class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                        type="number" formControlName="nit">
+                    <span *ngIf="form.controls.nit.touched && form.controls.nit.errors?.required"
+                        class="flex items-center font-medium tracking-wide text-red-500 mt-1 ml-1">
+                        This field is required
+                    </span>
+                </div>
+                <div class="w-full md:w-1/2 px-3">
+                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+                        Company Name
+                    </label>
+                    <input formControlName="name"
+                        class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                        id="grid-last-name" type="text">
+                    <span *ngIf="form.controls.name.touched && form.controls.name.errors?.required"
+                        class="flex items-center font-medium tracking-wide text-red-500 mt-1 ml-1">
+                        This field is required
+                    </span>
+                </div>
+            </div>
+            <div class="flex flex-wrap -mx-3 mb-6">
+                <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                        for="grid-first-name">
+                        Contact Name
+                    </label>
+                    <input
+                        class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                        type="text" formControlName="contact_name">
+                    <span *ngIf="form.controls.contact_name.touched && form.controls.contact_name.errors?.required"
+                        class="flex items-center font-medium tracking-wide text-red-500 mt-1 ml-1">
+                        This field is required
+                    </span>
+                </div>
+                <div class="w-full md:w-1/2 px-3">
+                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                        for="grid-last-name">
+                        Contact Email
+                    </label>
+                    <input
+                        class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                        formControlName="contact_email" type="text">
+                    <span *ngIf="form.controls.contact_email.touched && form.controls.contact_email.errors?.required"
+                        class="flex items-center font-medium tracking-wide text-red-500 mt-1 ml-1">
+                        This field is required
+                    </span>
+                </div>
+            </div>
+            <button *ngIf="!edit && !watching"
+                class="w-full h-12 bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 rounded shadow-lg hover:shadow-xl transition duration-200">
+                Register
+            </button>
+            <button *ngIf="edit" (click)="editCompany()"
+                class="w-full h-12 bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 rounded shadow-lg hover:shadow-xl transition duration-200">
+                Edit
+            </button>
+            <button *ngIf="watching" routerLink="/dashboard/register_ship/{{id}}"
+                class="w-full h-12 bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 rounded shadow-lg hover:shadow-xl transition duration-200">
+                Register a Ship
+            </button>
+            <br><br>
+            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                routerLink="/dashboard/home">
+                Return
+            </button>
+        </form>
+    </section>
+</main>
+
+<div *ngIf="watching">
+    <header class="mb-5">
+        <h1 class="text-4xl font-bold text-white text-center">
+            List of Ships
+        </h1>
+    </header>
+    <app-list-ships></app-list-ships>
+</div>

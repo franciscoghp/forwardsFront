@@ -1,0 +1,84 @@
+<header class="max-w-lg mx-auto">
+
+  <h1 class="text-4xl font-bold text-white text-center">Sign Up</h1>
+
+</header>
+
+<main class="bg-white max-w-lg mx-auto p-8 md:p-12 my-10 rounded-lg shadow-2xl">
+  <section>
+    <h3 class="font-bold text-2xl">Create your account.</h3>
+    <div *ngIf="errorMessage" role="alert">
+      <div class="bg-red-500 text-white font-bold rounded-t px-4 py-2">
+        Something it's wrong
+      </div>
+      <div class="border border-t-0 border-red-400 rounded-b bg-red-100 px-4 py-3 text-red-700">
+        <p>{{message}}</p>
+      </div>
+    </div>
+    <div *ngIf="successMessage" role="alert">
+      <div class="bg-green-500 text-white font-bold rounded-t px-4 py-2">
+        Success!
+      </div>
+      <div class="border border-t-0 border-green-400 rounded-b bg-green-100 px-4 py-3 text-green-700">
+        <p>Your account was successfully created.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="mt-10">
+    <form [formGroup]="form" (ngSubmit)="register()">
+      <div class="mb-6 pt-3 rounded bg-gray-200">
+        <label class="block text-gray-700 text-sm font-bold mb-2 ml-3" for="email">Email</label>
+        <input type="text" formControlName="email"
+          class="bg-gray-200 rounded w-full text-gray-700 focus:outline-none border-b-4 border-gray-300 focus:border-purple-600 transition duration-500 px-3 pb-3">
+          <span *ngIf="form.controls.email.touched && form.controls.email.errors?.required" 
+           class="flex items-center font-medium tracking-wide text-red-500 mt-1 ml-1">
+            This field is required
+          </span>
+        </div>
+      <div class="mb-6 pt-3 rounded bg-gray-200">
+        <label class="block text-gray-700 text-sm font-bold mb-2 ml-3" for="password">Password</label>
+        <input type="password" formControlName="password"
+          class="bg-gray-200 rounded w-full text-gray-700 focus:outline-none border-b-4 border-gray-300 focus:border-purple-600 transition duration-500 px-3 pb-3">
+          <span *ngIf="form.controls.password.touched && form.controls.password.errors?.required" 
+           class="flex items-center font-medium tracking-wide text-red-500 mt-1 ml-1">
+            This field is required
+          </span>
+          <span *ngIf="form.controls.password.touched && form.controls.password.errors?.minlength" 
+          class="flex items-center font-medium tracking-wide text-red-500 mt-1 ml-1">
+           This field requires at least 4 characters
+         </span>
+         <span *ngIf="form.controls.password.touched && form.controls.password.errors?.maxlength" 
+          class="flex items-center font-medium tracking-wide text-red-500 mt-1 ml-1">
+          This field requires maximum 12 characters
+         </span>
+        </div>
+      <div class="mb-6 pt-3 rounded bg-gray-200">
+        <label class="block text-gray-700 text-sm font-bold mb-2 ml-3" for="password">Confirm Password</label>
+        <input type="password" formControlName="confirm_password"
+          class="bg-gray-200 rounded w-full text-gray-700 focus:outline-none border-b-4 border-gray-300 focus:border-purple-600 transition duration-500 px-3 pb-3">
+          <span *ngIf="form.controls.confirm_password.touched && form.controls.confirm_password.errors?.required" 
+          class="flex items-center font-medium tracking-wide text-red-500 mt-1 ml-1">
+           This field is required
+         </span>
+         <span *ngIf="form.controls.confirm_password.touched && form.controls.confirm_password.errors?.minlength" 
+          class="flex items-center font-medium tracking-wide text-red-500 mt-1 ml-1">
+           This field requires at least 4 characters
+         </span>
+         <span *ngIf="form.controls.confirm_password.touched && form.controls.confirm_password.errors?.maxlength" 
+          class="flex items-center font-medium tracking-wide text-red-500 mt-1 ml-1">
+          This field requires maximum 12 characters
+         </span>
+        </div>
+      <div class="col-12">
+        <button
+          class="w-full h-12 bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 rounded shadow-lg hover:shadow-xl transition duration-200"
+          type="submit">Sign Up</button> <br><br>
+        <button
+          class="w-full h-12 bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 rounded shadow-lg hover:shadow-xl transition duration-200"
+          routerLink="/signin">Back to Sign In</button>
+      </div>
+    </form>
+  </section>
+</main>
+
